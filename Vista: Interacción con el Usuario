@@ -1,0 +1,63 @@
+import java.util.Scanner;
+
+public class VistaContenido {
+    private ControladorContenido controlador;
+
+    public VistaContenido() {
+        controlador = new ControladorContenido();
+        controlador.cargarPeliculasDesdeArchivo();
+    }
+
+    public void mostrarMenu() {
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
+
+        do {
+            System.out.println("\n--- Menú de Contenido Audiovisual ---");
+            System.out.println("1. Mostrar Películas");
+            System.out.println("2. Agregar Película");
+            System.out.println("3. Guardar y Salir");
+            System.out.print("Seleccione una opción: ");
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar buffer
+
+            switch (opcion) {
+                case 1:
+                    mostrarPeliculas();
+                    break;
+                case 2:
+                    agregarPelicula(scanner);
+                    break;
+                case 3:
+                    controlador.guardarPeliculasEnArchivo();
+                    System.out.println("Datos guardados. ¡Adiós!");
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+            }
+        } while (opcion != 3);
+    }
+
+    private void mostrarPeliculas() {
+        System.out.println("\n--- Lista de Películas ---");
+        for (Pelicula pelicula : controlador.obtenerPeliculas()) {
+            System.out.println(pelicula);
+        }
+    }
+
+    private void agregarPelicula(Scanner scanner) {
+        System.out.print("Ingrese el título de la película: ");
+        String titulo = scanner.nextLine();
+        System.out.print("Ingrese el género: ");
+        String genero = scanner.nextLine();
+        System.out.print("Ingrese el año: ");
+        int anio = scanner.nextInt();
+
+        controlador.agregarPelicula(new Pelicula(titulo, genero, anio));
+        System.out.println("¡Película agregada con éxito!");
+    }
+
+    public static void main(String[] args) {
+        new VistaContenido().mostrarMenu();
+    }
+}
