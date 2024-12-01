@@ -1,0 +1,33 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ArchivoContenido {
+    private static final String ARCHIVO = "contenido.csv";
+
+    // Método para leer contenido del archivo
+    public static List<String[]> leerArchivo() {
+        List<String[]> contenido = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(ARCHIVO))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                contenido.add(linea.split(",")); // Divide cada línea en un arreglo de Strings
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo: " + e.getMessage());
+        }
+        return contenido;
+    }
+
+    // Método para escribir contenido al archivo
+    public static void escribirArchivo(List<String[]> contenido) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO))) {
+            for (String[] linea : contenido) {
+                bw.write(String.join(",", linea)); // Une cada elemento del arreglo con comas
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error al escribir en el archivo: " + e.getMessage());
+        }
+    }
+}
