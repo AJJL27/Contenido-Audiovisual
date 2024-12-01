@@ -1,0 +1,13 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class PeliculaTest {
+
+    @Test
+    public void testCrearPelicula() {
+        Pelicula pelicula = new Pelicula("Inception", "Ciencia Ficción", 2010);
+        assertEquals("Inception", pelicula.getTitulo());
+        assertEquals("Ciencia Ficción", pelicula.getGenero());
+        assertEquals(2010, pelicula.getAnio());
+    }
+}
