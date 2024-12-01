@@ -1,0 +1,33 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class ControladorContenido {
+    private List<Pelicula> peliculas;
+
+    public ControladorContenido() {
+        peliculas = new ArrayList<>();
+    }
+
+    public void cargarPeliculasDesdeArchivo() {
+        List<String[]> datos = ArchivoContenido.leerArchivo();
+        for (String[] linea : datos) {
+            peliculas.add(new Pelicula(linea[0], linea[1], Integer.parseInt(linea[2])));
+        }
+    }
+
+    public void guardarPeliculasEnArchivo() {
+        List<String[]> datos = new ArrayList<>();
+        for (Pelicula pelicula : peliculas) {
+            datos.add(new String[]{pelicula.getTitulo(), pelicula.getGenero(), String.valueOf(pelicula.getAnio())});
+        }
+        ArchivoContenido.escribirArchivo(datos);
+    }
+
+    public void agregarPelicula(Pelicula pelicula) {
+        peliculas.add(pelicula);
+    }
+
+    public List<Pelicula> obtenerPeliculas() {
+        return peliculas;
+    }
+}
